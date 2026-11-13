@@ -157,12 +157,12 @@ export function FlashcardStudio({
       className="mx-auto max-w-4xl space-y-3.5 sm:space-y-5"
     >
       {/* Mobile Compact Summary Bar + Drawer Trigger */}
-      <div className="sm:hidden flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-3 py-2">
+      <div className="sm:hidden flex items-center justify-between gap-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2">
         <div className="min-w-0 flex-1">
-          <div className="truncate text-xs font-semibold text-slate-900">
+          <div className="truncate text-xs font-semibold text-slate-900 dark:text-slate-100">
             {activeModeLabel} · {activeScopeDetail}
           </div>
-          <div className="truncate text-[11px] text-slate-500">
+          <div className="truncate text-[11px] text-slate-500 dark:text-slate-400">
             <span className="font-mono tabular-nums">{deck.length} thẻ</span>
             {' · '}
             {showPinyinFront ? 'Pinyin mặt trước' : 'Ẩn Pinyin mặt trước'}
@@ -173,10 +173,10 @@ export function FlashcardStudio({
           onClick={() => setMobileDrawerOpen(true)}
           aria-expanded={mobileDrawerOpen}
           aria-controls="flashcard-mobile-drawer"
-          className="inline-flex min-h-[40px] items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-800 transition-colors hover:border-teal-700 hover:text-teal-800 whitespace-nowrap shrink-0"
+          className="inline-flex min-h-[40px] items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors hover:border-teal-700 dark:hover:border-teal-500 hover:text-teal-800 dark:hover:text-teal-300 whitespace-nowrap shrink-0"
         >
           <SlidersHorizontal
-            className="h-3.5 w-3.5 text-teal-700"
+            className="h-3.5 w-3.5 text-teal-700 dark:text-teal-400"
             aria-hidden="true"
           />
           <span>Cấu hình</span>
@@ -192,7 +192,7 @@ export function FlashcardStudio({
       >
         <div id="flashcard-mobile-drawer" className="space-y-4">
           <div className="space-y-2">
-            <span className="block text-xs font-semibold text-slate-700">
+            <span className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
               Chế độ học thẻ
             </span>
             <div
@@ -207,8 +207,8 @@ export function FlashcardStudio({
                   onClick={() => resetSession(m.id)}
                   className={`min-h-[42px] rounded-lg border px-3 py-2 text-xs font-medium transition-colors whitespace-nowrap ${
                     deckMode === m.id
-                      ? 'border-teal-700 bg-teal-50 text-teal-900 font-semibold'
-                      : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+                      ? 'border-teal-700 dark:border-teal-500 bg-teal-50 dark:bg-teal-950/60 text-teal-900 dark:text-teal-200 font-semibold'
+                      : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
                   }`}
                 >
                   {m.label}
@@ -217,11 +217,11 @@ export function FlashcardStudio({
             </div>
           </div>
 
-          <div className="space-y-3 border-t border-slate-100 pt-3">
+          <div className="space-y-3 border-t border-slate-100 dark:border-slate-800 pt-3">
             <div className="space-y-1.5">
               <label
                 htmlFor="mobile-flashcard-folder"
-                className="block text-xs font-semibold text-slate-700"
+                className="block text-xs font-semibold text-slate-700 dark:text-slate-300"
               >
                 Thư mục
               </label>
@@ -229,7 +229,7 @@ export function FlashcardStudio({
                 id="mobile-flashcard-folder"
                 value={folderId}
                 onChange={(e) => resetSession(deckMode, e.target.value)}
-                className="min-h-[44px] w-full rounded-xl border border-slate-200 bg-white pl-3 pr-9 py-2 text-xs font-medium text-slate-800 focus:border-teal-700 focus:outline-none"
+                className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pl-3 pr-9 py-2 text-xs font-medium text-slate-800 dark:text-slate-200 focus:border-teal-700 dark:focus:border-teal-500 focus:outline-none"
               >
                 <option value="all">Tất cả thư mục (570 thẻ)</option>
                 {VOCAB_FOLDERS.map((f) => (
@@ -244,7 +244,7 @@ export function FlashcardStudio({
               <div className="space-y-1.5">
                 <label
                   htmlFor="mobile-flashcard-deck"
-                  className="block text-xs font-semibold text-slate-700"
+                  className="block text-xs font-semibold text-slate-700 dark:text-slate-300"
                 >
                   Bộ thẻ
                 </label>
@@ -254,7 +254,7 @@ export function FlashcardStudio({
                   onChange={(e) =>
                     resetSession('topic', undefined, e.target.value)
                   }
-                  className="min-h-[44px] w-full rounded-xl border border-slate-200 bg-white pl-3 pr-9 py-2 text-xs font-medium text-slate-800 focus:border-teal-700 focus:outline-none"
+                  className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pl-3 pr-9 py-2 text-xs font-medium text-slate-800 dark:text-slate-200 focus:border-teal-700 dark:focus:border-teal-500 focus:outline-none"
                 >
                   {availableDecks.map((d) => (
                     <option key={d.id} value={d.id}>
@@ -267,14 +267,14 @@ export function FlashcardStudio({
             )}
           </div>
 
-          <div className="space-y-3 border-t border-slate-100 pt-3">
-            <label className="flex min-h-[44px] cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 py-2 text-xs font-medium text-slate-800">
+          <div className="space-y-3 border-t border-slate-100 dark:border-slate-800 pt-3">
+            <label className="flex min-h-[44px] cursor-pointer items-center justify-between gap-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/70 px-3.5 py-2 text-xs font-medium text-slate-800 dark:text-slate-200">
               <span>Hiện Pinyin ở mặt trước thẻ</span>
               <input
                 type="checkbox"
                 checked={showPinyinFront}
                 onChange={(e) => setShowPinyinFront(e.target.checked)}
-                className="h-4.5 w-4.5 rounded border-slate-300 text-teal-700 focus:ring-teal-700"
+                className="h-4.5 w-4.5 rounded border-slate-300 dark:border-slate-600 text-teal-700 focus:ring-teal-700"
               />
             </label>
 
@@ -290,9 +290,9 @@ export function FlashcardStudio({
                     : `Bộ thẻ đang học (${deck.length} thẻ)`
                 );
               }}
-              className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-800 transition-colors hover:border-teal-700 hover:text-teal-800 disabled:opacity-50"
+              className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors hover:border-teal-700 dark:hover:border-teal-500 hover:text-teal-800 dark:hover:text-teal-300 disabled:opacity-50"
             >
-              <Wand2 className="h-4 w-4 text-teal-700" aria-hidden="true" />
+              <Wand2 className="h-4 w-4 text-teal-700 dark:text-teal-400" aria-hidden="true" />
               <span>Tạo bài tập AI từ nhóm thẻ này</span>
             </button>
           </div>
@@ -300,12 +300,12 @@ export function FlashcardStudio({
       </MobileConfigDrawer>
 
       {/* Desktop Inline Config Bar */}
-      <div className="hidden sm:block rounded-xl border border-slate-200 bg-white p-3.5 space-y-3">
+      <div className="hidden sm:block rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3.5 space-y-3">
         <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <div
             role="group"
             aria-label="Chế độ học thẻ"
-            className="flex w-full sm:w-auto items-center gap-0.5 overflow-x-auto no-scrollbar rounded-lg bg-slate-100 p-0.5"
+            className="flex w-full sm:w-auto items-center gap-0.5 overflow-x-auto no-scrollbar rounded-lg bg-slate-100 dark:bg-slate-800 p-0.5"
           >
             {DECK_MODE_LABELS.map((m) => (
               <button
@@ -314,8 +314,8 @@ export function FlashcardStudio({
                 onClick={() => resetSession(m.id)}
                 className={`min-h-[36px] sm:min-h-0 rounded-md px-3 py-1.5 text-xs font-medium transition-colors whitespace-nowrap shrink-0 ${
                   deckMode === m.id
-                    ? 'bg-white text-slate-900 shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 shadow-xs'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                 }`}
               >
                 {m.label}
@@ -324,12 +324,12 @@ export function FlashcardStudio({
           </div>
 
           <div className="flex w-full sm:w-auto items-center justify-between sm:justify-end gap-3">
-            <label className="min-h-[36px] sm:min-h-0 inline-flex cursor-pointer items-center gap-1.5 text-xs text-slate-600">
+            <label className="min-h-[36px] sm:min-h-0 inline-flex cursor-pointer items-center gap-1.5 text-xs text-slate-600 dark:text-slate-300">
               <input
                 type="checkbox"
                 checked={showPinyinFront}
                 onChange={(e) => setShowPinyinFront(e.target.checked)}
-                className="h-4 w-4 sm:h-3.5 sm:w-3.5 rounded border-slate-300 text-teal-700 focus:ring-teal-700"
+                className="h-4 w-4 sm:h-3.5 sm:w-3.5 rounded border-slate-300 dark:border-slate-600 text-teal-700 focus:ring-teal-700"
               />
               <span>Pinyin mặt trước</span>
             </label>
@@ -345,7 +345,7 @@ export function FlashcardStudio({
                     : `Bộ thẻ đang học (${deck.length} thẻ)`
                 )
               }
-              className="min-h-[38px] sm:min-h-0 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-800 transition-colors hover:border-teal-700 hover:text-teal-800 disabled:opacity-50 whitespace-nowrap shrink-0"
+              className="min-h-[38px] sm:min-h-0 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors hover:border-teal-700 dark:hover:border-teal-500 hover:text-teal-800 dark:hover:text-teal-300 disabled:opacity-50 whitespace-nowrap shrink-0"
             >
               <Wand2 className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Bài tập AI</span>
@@ -354,14 +354,14 @@ export function FlashcardStudio({
         </div>
 
         <div
-          className={`grid gap-2 border-t border-slate-100 pt-2.5 sm:pt-3 ${
+          className={`grid gap-2 border-t border-slate-100 dark:border-slate-800 pt-2.5 sm:pt-3 ${
             deckMode === 'topic' ? 'grid-cols-2' : 'grid-cols-1 sm:grid-cols-2'
           }`}
         >
           <div className="flex items-center gap-2 min-w-0">
             <label
               htmlFor="flashcard-folder"
-              className="hidden sm:inline w-16 shrink-0 text-xs font-medium text-slate-500"
+              className="hidden sm:inline w-16 shrink-0 text-xs font-medium text-slate-500 dark:text-slate-400"
             >
               Thư mục
             </label>
@@ -370,7 +370,7 @@ export function FlashcardStudio({
               aria-label="Chọn thư mục"
               value={folderId}
               onChange={(e) => resetSession(deckMode, e.target.value)}
-              className="min-h-[40px] sm:min-h-0 min-w-0 flex-1 rounded-lg border border-slate-200 bg-white pl-3 pr-9 py-1.5 text-xs font-medium text-slate-800 focus:border-teal-700 focus:outline-none truncate"
+              className="min-h-[40px] sm:min-h-0 min-w-0 flex-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pl-3 pr-9 py-1.5 text-xs font-medium text-slate-800 dark:text-slate-200 focus:border-teal-700 dark:focus:border-teal-500 focus:outline-none truncate"
             >
               <option value="all">Tất cả thư mục (570 thẻ)</option>
               {VOCAB_FOLDERS.map((f) => (
@@ -385,7 +385,7 @@ export function FlashcardStudio({
             <div className="flex items-center gap-2 min-w-0">
               <label
                 htmlFor="flashcard-deck"
-                className="hidden sm:inline w-16 shrink-0 text-xs font-medium text-slate-500"
+                className="hidden sm:inline w-16 shrink-0 text-xs font-medium text-slate-500 dark:text-slate-400"
               >
                 Bộ thẻ
               </label>
@@ -396,7 +396,7 @@ export function FlashcardStudio({
                 onChange={(e) =>
                   resetSession('topic', undefined, e.target.value)
                 }
-                className="min-h-[40px] sm:min-h-0 min-w-0 flex-1 rounded-lg border border-slate-200 bg-white pl-3 pr-9 py-1.5 text-xs font-medium text-slate-800 focus:border-teal-700 focus:outline-none truncate"
+                className="min-h-[40px] sm:min-h-0 min-w-0 flex-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pl-3 pr-9 py-1.5 text-xs font-medium text-slate-800 dark:text-slate-200 focus:border-teal-700 dark:focus:border-teal-500 focus:outline-none truncate"
               >
                 {availableDecks.map((d) => (
                   <option key={d.id} value={d.id}>
@@ -412,8 +412,8 @@ export function FlashcardStudio({
 
       {/* Study Stage */}
       {deck.length === 0 ? (
-        <div className="rounded-xl border border-slate-200 bg-white p-10 text-center space-y-4">
-          <p className="text-base font-semibold text-slate-900">
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-10 text-center space-y-4">
+          <p className="text-base font-semibold text-slate-900 dark:text-slate-100">
             Không có thẻ trong nhóm này
           </p>
           <button
@@ -425,31 +425,31 @@ export function FlashcardStudio({
                 VOCAB_DECKS[0].id
               )
             }
-            className="rounded-lg bg-teal-700 px-4 py-2 text-xs font-semibold text-white hover:bg-teal-800"
+            className="rounded-lg bg-teal-700 dark:bg-teal-600 px-4 py-2 text-xs font-semibold text-white hover:bg-teal-800 dark:hover:bg-teal-500"
           >
             Học {VOCAB_DECKS[0].name}
           </button>
         </div>
       ) : isCompleted ? (
-        <div className="mx-auto max-w-xl rounded-xl border border-slate-200 bg-white p-8 text-center space-y-5">
+        <div className="mx-auto max-w-xl rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 text-center space-y-5">
           <CheckCircle2
-            className="mx-auto h-9 w-9 text-emerald-700"
+            className="mx-auto h-9 w-9 text-emerald-700 dark:text-emerald-400"
             aria-hidden="true"
           />
-          <h2 className="font-display text-2xl font-bold text-slate-900">
+          <h2 className="font-display text-2xl font-bold text-slate-900 dark:text-slate-100">
             Hoàn thành {deck.length} thẻ
           </h2>
 
-          <div className="grid grid-cols-2 gap-4 border-y border-slate-100 py-4">
+          <div className="grid grid-cols-2 gap-4 border-y border-slate-100 dark:border-slate-800 py-4">
             <div>
-              <div className="text-xs text-slate-500">Đã ôn</div>
-              <div className="mt-0.5 font-mono text-2xl font-semibold text-slate-900 tabular-nums">
+              <div className="text-xs text-slate-500 dark:text-slate-400">Đã ôn</div>
+              <div className="mt-0.5 font-mono text-2xl font-semibold text-slate-900 dark:text-slate-100 tabular-nums">
                 {reviewedInSession.length}
               </div>
             </div>
             <div>
-              <div className="text-xs text-slate-500">Tỷ lệ nhớ</div>
-              <div className="mt-0.5 font-mono text-2xl font-semibold text-emerald-700 tabular-nums">
+              <div className="text-xs text-slate-500 dark:text-slate-400">Tỷ lệ nhớ</div>
+              <div className="mt-0.5 font-mono text-2xl font-semibold text-emerald-700 dark:text-emerald-400 tabular-nums">
                 {reviewedInSession.length === 0
                   ? 0
                   : Math.round(
@@ -464,7 +464,7 @@ export function FlashcardStudio({
             <button
               type="button"
               onClick={() => resetSession()}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700"
             >
               <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Ôn tiếp</span>
@@ -477,7 +477,7 @@ export function FlashcardStudio({
                   `Kiểm tra ${deck.length} từ vừa ôn`
                 )
               }
-              className="inline-flex items-center gap-1.5 rounded-lg bg-teal-700 px-4 py-2 text-xs font-semibold text-white hover:bg-teal-800"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-teal-700 dark:bg-teal-600 px-4 py-2 text-xs font-semibold text-white hover:bg-teal-800 dark:hover:bg-teal-500"
             >
               <Wand2 className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Kiểm tra AI</span>
@@ -488,7 +488,7 @@ export function FlashcardStudio({
         currentCard && (
           <div className="mx-auto max-w-2xl space-y-4">
             <div className="space-y-1.5">
-              <div className="flex items-center justify-between text-xs font-medium text-slate-600">
+              <div className="flex items-center justify-between text-xs font-medium text-slate-600 dark:text-slate-400">
                 <span className="font-mono tabular-nums">
                   Thẻ {currentIndex + 1} / {deck.length}
                 </span>
@@ -496,9 +496,9 @@ export function FlashcardStudio({
                   {currentCard.folderName} · {currentCard.topic}
                 </span>
               </div>
-              <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
                 <div
-                  className="h-full bg-teal-700 transition-transform duration-200 origin-left"
+                  className="h-full bg-teal-700 dark:bg-teal-500 transition-transform duration-200 origin-left"
                   style={{
                     transform: `scaleX(${Math.max(0.02, progressPct / 100)})`,
                   }}
@@ -515,25 +515,25 @@ export function FlashcardStudio({
                     : `Lật thẻ ${currentCard.word}`
                 }
                 onClick={() => setIsFlipped((f) => !f)}
-                className="flex min-h-[270px] sm:min-h-[340px] w-full flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 pb-6 pt-16 text-center transition-colors hover:border-slate-300 focus-visible:outline-2 focus-visible:outline-teal-700 sm:p-10"
+                className="flex min-h-[270px] sm:min-h-[340px] w-full flex-col items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 pb-6 pt-16 text-center transition-colors hover:border-slate-300 dark:hover:border-slate-700 focus-visible:outline-2 focus-visible:outline-teal-700 sm:p-10"
               >
                 {!isFlipped ? (
                   <div className="space-y-2.5 sm:space-y-3">
-                    <div className="text-xs text-slate-400">
+                    <div className="text-xs text-slate-400 dark:text-slate-500">
                       <span className="font-mono tabular-nums">
                         #{String(currentCard.id).padStart(3, '0')}
                       </span>{' '}
                       · {currentCard.posVi}
                     </div>
-                    <div className="font-hanzi text-5xl font-bold text-slate-900 sm:text-7xl">
+                    <div className="font-hanzi text-5xl font-bold text-slate-900 dark:text-slate-100 sm:text-7xl">
                       {currentCard.word}
                     </div>
                     {showPinyinFront && (
-                      <div className="font-mono text-lg sm:text-xl text-slate-600">
+                      <div className="font-mono text-lg sm:text-xl text-slate-600 dark:text-slate-300">
                         {currentCard.pinyin}
                       </div>
                     )}
-                    <div className="pt-2 text-[11px] font-mono text-slate-400">
+                    <div className="pt-2 text-[11px] font-mono text-slate-400 dark:text-slate-500">
                       <span className="sm:hidden">Chạm thẻ để lật</span>
                       <span className="hidden sm:inline">Space · Lật thẻ</span>
                     </div>
@@ -541,29 +541,29 @@ export function FlashcardStudio({
                 ) : (
                   <div className="w-full max-w-md space-y-4 sm:space-y-5">
                     <div>
-                      <div className="font-hanzi text-3xl sm:text-4xl font-bold text-slate-900">
+                      <div className="font-hanzi text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-100">
                         {currentCard.word}
                       </div>
-                      <div className="mt-1 font-mono text-xs sm:text-sm text-slate-500">
+                      <div className="mt-1 font-mono text-xs sm:text-sm text-slate-500 dark:text-slate-400">
                         {currentCard.pinyin} · {currentCard.posVi}
                       </div>
                     </div>
 
-                    <div className="border-t border-slate-100 pt-3.5 sm:pt-4 space-y-3">
-                      <div className="text-xl sm:text-2xl font-bold text-teal-800">
+                    <div className="border-t border-slate-100 dark:border-slate-800 pt-3.5 sm:pt-4 space-y-3">
+                      <div className="text-xl sm:text-2xl font-bold text-teal-800 dark:text-teal-300">
                         {currentCard.viMeaning}
                       </div>
-                      <div className="rounded-lg bg-slate-50 p-3 sm:p-3.5 text-left space-y-1">
-                        <p className="font-hanzi text-base font-semibold text-slate-900">
+                      <div className="rounded-lg bg-slate-50 dark:bg-slate-800/80 p-3 sm:p-3.5 text-left space-y-1">
+                        <p className="font-hanzi text-base font-semibold text-slate-900 dark:text-slate-100">
                           {currentCard.example}
                         </p>
                         {currentCard.examplePinyin && (
-                          <p className="font-mono text-xs text-slate-500">
+                          <p className="font-mono text-xs text-slate-500 dark:text-slate-400">
                             {currentCard.examplePinyin}
                           </p>
                         )}
                         {currentCard.exampleVi && (
-                          <p className="text-xs text-slate-700">
+                          <p className="text-xs text-slate-700 dark:text-slate-300">
                             {currentCard.exampleVi}
                           </p>
                         )}
@@ -579,7 +579,7 @@ export function FlashcardStudio({
                     type="button"
                     aria-label={`Nghe ví dụ của ${currentCard.word}`}
                     onClick={() => speakChinese(currentCard.example)}
-                    className="min-h-[38px] inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:border-teal-700 hover:text-teal-800"
+                    className="min-h-[38px] inline-flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:border-teal-700 dark:hover:border-teal-500 hover:text-teal-800 dark:hover:text-teal-300"
                   >
                     <Volume2 className="h-3.5 w-3.5" aria-hidden="true" />
                     <span>Ví dụ</span>
@@ -589,7 +589,7 @@ export function FlashcardStudio({
                   type="button"
                   aria-label={`Phát âm ${currentCard.word}`}
                   onClick={() => speakChinese(currentCard.word)}
-                  className="min-h-[38px] inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:border-teal-700 hover:text-teal-800"
+                  className="min-h-[38px] inline-flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:border-teal-700 dark:hover:border-teal-500 hover:text-teal-800 dark:hover:text-teal-300"
                 >
                   <Volume2 className="h-3.5 w-3.5" aria-hidden="true" />
                   <span>Nghe</span>
@@ -602,7 +602,7 @@ export function FlashcardStudio({
                 <button
                   type="button"
                   onClick={() => setIsFlipped(true)}
-                  className="min-h-[48px] w-full sm:w-auto rounded-xl sm:rounded-lg bg-slate-900 px-8 py-3 sm:py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+                  className="min-h-[48px] w-full sm:w-auto rounded-xl sm:rounded-lg bg-slate-900 dark:bg-slate-100 px-8 py-3 sm:py-2.5 text-sm font-semibold text-white dark:text-slate-900 transition-colors hover:bg-slate-800 dark:hover:bg-white"
                 >
                   Lật thẻ
                 </button>
@@ -615,42 +615,42 @@ export function FlashcardStudio({
                 <button
                   type="button"
                   onClick={() => handleRate('again')}
-                  className="min-h-[56px] rounded-xl border border-rose-200 bg-white px-3 py-2.5 text-center transition-colors hover:bg-rose-50"
+                  className="min-h-[56px] rounded-xl border border-rose-200 dark:border-rose-800/80 bg-white dark:bg-slate-900 px-3 py-2.5 text-center transition-colors hover:bg-rose-50 dark:hover:bg-rose-950/40"
                 >
-                  <div className="text-sm font-semibold text-rose-700">
+                  <div className="text-sm font-semibold text-rose-700 dark:text-rose-400">
                     1 · Quên
                   </div>
-                  <div className="text-[11px] text-slate-500">Ôn lại sớm</div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400">Ôn lại sớm</div>
                 </button>
                 <button
                   type="button"
                   onClick={() => handleRate('hard')}
-                  className="min-h-[56px] rounded-xl border border-amber-200 bg-white px-3 py-2.5 text-center transition-colors hover:bg-amber-50"
+                  className="min-h-[56px] rounded-xl border border-amber-200 dark:border-amber-800/80 bg-white dark:bg-slate-900 px-3 py-2.5 text-center transition-colors hover:bg-amber-50 dark:hover:bg-amber-950/40"
                 >
-                  <div className="text-sm font-semibold text-amber-800">
+                  <div className="text-sm font-semibold text-amber-800 dark:text-amber-300">
                     2 · Khó
                   </div>
-                  <div className="text-[11px] text-slate-500">1 ngày</div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400">1 ngày</div>
                 </button>
                 <button
                   type="button"
                   onClick={() => handleRate('good')}
-                  className="min-h-[56px] rounded-xl border border-sky-200 bg-white px-3 py-2.5 text-center transition-colors hover:bg-sky-50"
+                  className="min-h-[56px] rounded-xl border border-sky-200 dark:border-sky-800/80 bg-white dark:bg-slate-900 px-3 py-2.5 text-center transition-colors hover:bg-sky-50 dark:hover:bg-sky-950/40"
                 >
-                  <div className="text-sm font-semibold text-sky-800">
+                  <div className="text-sm font-semibold text-sky-800 dark:text-sky-300">
                     3 · Nhớ
                   </div>
-                  <div className="text-[11px] text-slate-500">3 ngày</div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400">3 ngày</div>
                 </button>
                 <button
                   type="button"
                   onClick={() => handleRate('easy')}
-                  className="min-h-[56px] rounded-xl border border-emerald-200 bg-white px-3 py-2.5 text-center transition-colors hover:bg-emerald-50"
+                  className="min-h-[56px] rounded-xl border border-emerald-200 dark:border-emerald-800/80 bg-white dark:bg-slate-900 px-3 py-2.5 text-center transition-colors hover:bg-emerald-50 dark:hover:bg-emerald-950/40"
                 >
-                  <div className="text-sm font-semibold text-emerald-800">
+                  <div className="text-sm font-semibold text-emerald-800 dark:text-emerald-400">
                     4 · Thuộc
                   </div>
-                  <div className="text-[11px] text-slate-500">6+ ngày</div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400">6+ ngày</div>
                 </button>
               </div>
             )}

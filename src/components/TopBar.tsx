@@ -8,10 +8,13 @@ import {
   Layers,
   Loader2,
   LogOut,
+  Moon,
+  Sun,
   Wand2,
   type LucideIcon,
 } from 'lucide-react';
 import type { AppSection } from '../types/vocab';
+import type { ThemeMode } from '../utils/theme';
 
 export type CloudSyncState = 'local' | 'syncing' | 'synced' | 'error';
 
@@ -25,6 +28,8 @@ export interface CloudUserInfo {
 interface TopBarProps {
   activeSection: AppSection;
   onSelectSection: (section: AppSection) => void;
+  theme: ThemeMode;
+  onToggleTheme: () => void;
   authReady: boolean;
   user: CloudUserInfo | null;
   syncStatus: CloudSyncState;
@@ -44,6 +49,8 @@ const NAV_ITEMS: Array<{ id: AppSection; label: string; icon: LucideIcon }> = [
 export function TopBar({
   activeSection,
   onSelectSection,
+  theme,
+  onToggleTheme,
   authReady,
   user,
   syncStatus,
@@ -78,12 +85,12 @@ export function TopBar({
     .toUpperCase();
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur-md">
+    <header className="sticky top-0 z-30 border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md">
       <div className="mx-auto flex h-12 md:h-14 max-w-7xl items-center justify-between gap-2 md:gap-6 px-3.5 sm:px-6 lg:px-8">
         <button
           type="button"
           onClick={() => onSelectSection('explore')}
-          className="font-display text-base md:text-lg font-bold tracking-tight text-slate-900 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
+          className="font-display text-base md:text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100 whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
         >
           Hán Ngữ 570
         </button>
@@ -102,15 +109,15 @@ export function TopBar({
                 aria-current={isActive ? 'page' : undefined}
                 className={`relative py-4 text-sm font-medium transition-colors whitespace-nowrap shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700 ${
                   isActive
-                    ? 'text-teal-800'
-                    : 'text-slate-600 hover:text-slate-900'
+                    ? 'text-teal-800 dark:text-teal-400'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
                 }`}
               >
                 {item.label}
                 {isActive && (
                   <span
                     aria-hidden="true"
-                    className="absolute inset-x-0 bottom-0 h-0.5 bg-teal-700"
+                    className="absolute inset-x-0 bottom-0 h-0.5 bg-teal-700 dark:bg-teal-400"
                   />
                 )}
               </button>
@@ -119,18 +126,37 @@ export function TopBar({
         </nav>
 
         <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={onToggleTheme}
+            aria-label={
+              theme === 'dark'
+                ? 'Chuyển sang giao diện sáng'
+                : 'Chuyển sang giao diện tối'
+            }
+            aria-pressed={theme === 'dark'}
+            title={theme === 'dark' ? 'Giao diện sáng' : 'Giao diện tối'}
+            className="inline-flex min-h-[36px] min-w-[36px] md:min-h-[34px] md:min-w-[34px] items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 transition-colors hover:border-teal-700 dark:hover:border-teal-500 hover:text-teal-800 dark:hover:text-teal-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700 shrink-0"
+          >
+            {theme === 'dark' ? (
+              <Sun className="h-4 w-4 text-amber-400" aria-hidden="true" />
+            ) : (
+              <Moon className="h-4 w-4" aria-hidden="true" />
+            )}
+          </button>
+
           {authReady && !user && (
             <button
               type="button"
               disabled={authLoading}
               onClick={onSignIn}
               aria-label="Đăng nhập Google để đồng bộ cloud"
-              className="inline-flex min-h-[36px] md:min-h-0 items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 md:px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:border-teal-700 hover:text-teal-800 disabled:opacity-50 whitespace-nowrap shrink-0"
+              className="inline-flex min-h-[36px] md:min-h-0 items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 md:px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors hover:border-teal-700 dark:hover:border-teal-500 hover:text-teal-800 dark:hover:text-teal-300 disabled:opacity-50 whitespace-nowrap shrink-0"
             >
               {authLoading ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin text-teal-700" aria-hidden="true" />
+                <Loader2 className="h-3.5 w-3.5 animate-spin text-teal-700 dark:text-teal-400" aria-hidden="true" />
               ) : (
-                <Cloud className="h-3.5 w-3.5 text-teal-700" aria-hidden="true" />
+                <Cloud className="h-3.5 w-3.5 text-teal-700 dark:text-teal-400" aria-hidden="true" />
               )}
               <span>Đăng nhập</span>
             </button>
@@ -144,7 +170,7 @@ export function TopBar({
                 aria-haspopup="menu"
                 aria-label={`Tài khoản ${user.displayName || user.email}`}
                 onClick={() => setMenuOpen((prev) => !prev)}
-                className="inline-flex min-h-[36px] md:min-h-0 items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-medium text-slate-800 hover:border-teal-700 whitespace-nowrap"
+                className="inline-flex min-h-[36px] md:min-h-0 items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2 py-1 text-xs font-medium text-slate-800 dark:text-slate-200 hover:border-teal-700 dark:hover:border-teal-500 whitespace-nowrap"
               >
                 {user.photoURL ? (
                   <img
@@ -163,12 +189,12 @@ export function TopBar({
                 </span>
                 {syncStatus === 'syncing' ? (
                   <Loader2
-                    className="h-3 w-3 animate-spin text-teal-700"
+                    className="h-3 w-3 animate-spin text-teal-700 dark:text-teal-400"
                     aria-label="Đang đồng bộ"
                   />
                 ) : syncStatus === 'error' ? (
                   <CloudOff
-                    className="h-3 w-3 text-rose-600"
+                    className="h-3 w-3 text-rose-600 dark:text-rose-400"
                     aria-label="Lỗi đồng bộ"
                   />
                 ) : (
@@ -182,33 +208,33 @@ export function TopBar({
               {menuOpen && (
                 <div
                   role="menu"
-                  className="absolute right-0 mt-1.5 w-64 rounded-xl border border-slate-200 bg-white p-3 shadow-lg space-y-2.5 z-50"
+                  className="absolute right-0 mt-1.5 w-64 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 shadow-lg space-y-2.5 z-50"
                 >
                   <div className="min-w-0">
-                    <div className="truncate text-xs font-semibold text-slate-900">
+                    <div className="truncate text-xs font-semibold text-slate-900 dark:text-slate-100">
                       {user.displayName || 'Người học'}
                     </div>
                     {user.email && (
-                      <div className="truncate text-[11px] text-slate-500">
+                      <div className="truncate text-[11px] text-slate-500 dark:text-slate-400">
                         {user.email}
                       </div>
                     )}
                   </div>
 
-                  <div className="flex items-center gap-1.5 rounded-lg bg-slate-50 px-2.5 py-1.5 text-[11px] font-medium text-slate-700">
+                  <div className="flex items-center gap-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 px-2.5 py-1.5 text-[11px] font-medium text-slate-700 dark:text-slate-200">
                     {syncStatus === 'syncing' ? (
                       <>
-                        <Loader2 className="h-3.5 w-3.5 animate-spin text-teal-700" aria-hidden="true" />
+                        <Loader2 className="h-3.5 w-3.5 animate-spin text-teal-700 dark:text-teal-400" aria-hidden="true" />
                         <span>Đang đồng bộ Firestore...</span>
                       </>
                     ) : syncStatus === 'error' ? (
                       <>
-                        <CloudOff className="h-3.5 w-3.5 text-rose-600" aria-hidden="true" />
-                        <span className="text-rose-700">Đồng bộ tạm gián đoạn</span>
+                        <CloudOff className="h-3.5 w-3.5 text-rose-600 dark:text-rose-400" aria-hidden="true" />
+                        <span className="text-rose-700 dark:text-rose-400">Đồng bộ tạm gián đoạn</span>
                       </>
                     ) : (
                       <>
-                        <Cloud className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
+                        <Cloud className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
                         <span>Đã đồng bộ Cloud realtime</span>
                       </>
                     )}
@@ -221,7 +247,7 @@ export function TopBar({
                       setMenuOpen(false);
                       onSignOut();
                     }}
-                    className="flex w-full items-center gap-2 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 hover:text-rose-700"
+                    className="flex w-full items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 px-2.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-rose-700 dark:hover:text-rose-400"
                   >
                     <LogOut className="h-3.5 w-3.5" aria-hidden="true" />
                     <span>Đăng xuất</span>
@@ -246,7 +272,7 @@ export function MobileSectionBar({
   return (
     <nav
       aria-label="Điều hướng di động"
-      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 items-center border-t border-slate-200 bg-white/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)] md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 items-center border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)] md:hidden"
     >
       {NAV_ITEMS.map((item) => {
         const isActive = activeSection === item.id;
@@ -259,14 +285,14 @@ export function MobileSectionBar({
             aria-current={isActive ? 'page' : undefined}
             className={`relative flex min-h-[56px] flex-col items-center justify-center gap-0.5 px-1 py-1.5 text-[10.5px] font-medium transition-colors whitespace-nowrap ${
               isActive
-                ? 'text-teal-800 font-semibold'
-                : 'text-slate-500 hover:text-slate-900'
+                ? 'text-teal-800 dark:text-teal-400 font-semibold'
+                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100'
             }`}
           >
             {isActive && (
               <span
                 aria-hidden="true"
-                className="absolute top-0 inset-x-3 h-0.5 rounded-full bg-teal-700"
+                className="absolute top-0 inset-x-3 h-0.5 rounded-full bg-teal-700 dark:bg-teal-400"
               />
             )}
             <Icon className="h-[19px] w-[19px] shrink-0" aria-hidden="true" />

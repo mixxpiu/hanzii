@@ -57,6 +57,12 @@ import {
   type DeckMode,
   type ReviewRating,
 } from './utils/studyLogic';
+import {
+  applyDocumentTheme,
+  getInitialTheme,
+  writeStoredTheme,
+  type ThemeMode,
+} from './utils/theme';
 
 const PROGRESS_STORAGE_KEY = 'hanviet_hsk1_323_progress_v1';
 const OVERRIDES_STORAGE_KEY = 'hanviet_hsk1_323_overrides_v1';
@@ -88,6 +94,7 @@ function toCloudUserInfo(user: User | null): CloudUserInfo | null {
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<AppSection>('explore');
+  const [theme, setTheme] = useState<ThemeMode>(() => getInitialTheme());
   const [progressMap, setProgressMap] = useState<ProgressMap>(() =>
     loadStoredJson<ProgressMap>(PROGRESS_STORAGE_KEY, {})
   );
@@ -149,6 +156,15 @@ export default function App() {
   useEffect(() => {
     void testConnection();
   }, []);
+
+  useEffect(() => {
+    applyDocumentTheme(theme);
+    writeStoredTheme(theme);
+  }, [theme]);
+
+  function handleToggleTheme() {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  }
 
   useEffect(() => {
     try {
@@ -526,10 +542,12 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <TopBar
         activeSection={activeSection}
         onSelectSection={handleSelectSection}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
         authReady={authReady}
         user={cloudUser}
         syncStatus={syncStatus}

@@ -246,12 +246,12 @@ export function AiExerciseStudio({
   return (
     <section aria-label="Bài tập AI" className="mx-auto max-w-4xl space-y-5">
       {/* Compact Config Panel */}
-      <div className="rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4 space-y-3">
+      <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3.5 sm:p-4 space-y-3">
         <div className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-3">
           <div className="col-span-2 sm:col-span-1 space-y-1">
             <label
               htmlFor="quiz-scope"
-              className="block text-xs font-medium text-slate-600"
+              className="block text-xs font-medium text-slate-600 dark:text-slate-400"
             >
               Nguồn từ
             </label>
@@ -263,7 +263,7 @@ export function AiExerciseStudio({
                 if (next !== 'custom') onClearPreselection();
                 setScope(next);
               }}
-              className="min-h-[42px] sm:min-h-0 w-full rounded-lg border border-slate-200 bg-white pl-3 pr-9 py-2 text-xs font-medium text-slate-800 focus:border-teal-700 focus:outline-none truncate"
+              className="min-h-[42px] sm:min-h-0 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pl-3 pr-9 py-2 text-xs font-medium text-slate-800 dark:text-slate-200 focus:border-teal-700 dark:focus:border-teal-500 focus:outline-none truncate"
             >
               {preselectedWords?.length ? (
                 <option value="custom">
@@ -281,7 +281,7 @@ export function AiExerciseStudio({
               <div className="space-y-1">
                 <label
                   htmlFor="quiz-folder"
-                  className="block text-xs font-medium text-slate-600"
+                  className="block text-xs font-medium text-slate-600 dark:text-slate-400"
                 >
                   Thư mục
                 </label>
@@ -295,7 +295,7 @@ export function AiExerciseStudio({
                     const nextDecks = getDecksByFolder(nextFolder);
                     setSelectedDeckId(nextDecks[0]?.id ?? 'all');
                   }}
-                  className="min-h-[42px] sm:min-h-0 w-full rounded-lg border border-slate-200 bg-white pl-3 pr-9 py-2 text-xs font-medium text-slate-800 focus:border-teal-700 focus:outline-none truncate"
+                  className="min-h-[42px] sm:min-h-0 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pl-3 pr-9 py-2 text-xs font-medium text-slate-800 dark:text-slate-200 focus:border-teal-700 dark:focus:border-teal-500 focus:outline-none truncate"
                 >
                   <option value="all">Tất cả thư mục (23 bộ thẻ)</option>
                   {VOCAB_FOLDERS.map((f) => (
@@ -309,7 +309,7 @@ export function AiExerciseStudio({
               <div className="space-y-1">
                 <label
                   htmlFor="quiz-deck"
-                  className="block text-xs font-medium text-slate-600"
+                  className="block text-xs font-medium text-slate-600 dark:text-slate-400"
                 >
                   Bộ thẻ
                 </label>
@@ -318,7 +318,7 @@ export function AiExerciseStudio({
                   aria-label="Chọn bộ thẻ bài tập"
                   value={selectedDeckId}
                   onChange={(e) => setSelectedDeckId(e.target.value)}
-                  className="min-h-[42px] sm:min-h-0 w-full rounded-lg border border-slate-200 bg-white pl-3 pr-9 py-2 text-xs font-medium text-slate-800 focus:border-teal-700 focus:outline-none truncate"
+                  className="min-h-[42px] sm:min-h-0 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pl-3 pr-9 py-2 text-xs font-medium text-slate-800 dark:text-slate-200 focus:border-teal-700 dark:focus:border-teal-500 focus:outline-none truncate"
                 >
                   <option value="all">Tất cả bộ thẻ (50 thẻ đầu)</option>
                   {availableDecks.map((d) => (
@@ -335,7 +335,7 @@ export function AiExerciseStudio({
           <div className="col-span-2 sm:col-span-1 space-y-1">
             <label
               htmlFor="quiz-type"
-              className="block text-xs font-medium text-slate-600"
+              className="block text-xs font-medium text-slate-600 dark:text-slate-400"
             >
               Dạng bài
             </label>
@@ -343,7 +343,7 @@ export function AiExerciseStudio({
               id="quiz-type"
               value={exerciseType}
               onChange={(e) => setExerciseType(e.target.value as ExerciseType)}
-              className="min-h-[42px] sm:min-h-0 w-full rounded-lg border border-slate-200 bg-white pl-3 pr-9 py-2 text-xs font-medium text-slate-800 focus:border-teal-700 focus:outline-none truncate"
+              className="min-h-[42px] sm:min-h-0 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pl-3 pr-9 py-2 text-xs font-medium text-slate-800 dark:text-slate-200 focus:border-teal-700 dark:focus:border-teal-500 focus:outline-none truncate"
             >
               <option value={ExerciseType.MIXED}>Tổng hợp (4 dạng)</option>
               <option value={ExerciseType.MULTIPLE_CHOICE}>Trắc nghiệm</option>
@@ -356,7 +356,7 @@ export function AiExerciseStudio({
           <div className="space-y-1">
             <label
               htmlFor="quiz-difficulty"
-              className="block text-xs font-medium text-slate-600"
+              className="block text-xs font-medium text-slate-600 dark:text-slate-400"
             >
               Độ khó
             </label>
@@ -365,7 +365,7 @@ export function AiExerciseStudio({
               aria-label="Độ khó"
               value={difficulty}
               onChange={(e) => setDifficulty(e.target.value as DifficultyLevel)}
-              className="min-h-[42px] sm:min-h-0 w-full rounded-lg border border-slate-200 bg-white pl-3 pr-9 py-2 text-xs font-medium text-slate-800 focus:border-teal-700 focus:outline-none truncate"
+              className="min-h-[42px] sm:min-h-0 w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pl-3 pr-9 py-2 text-xs font-medium text-slate-800 dark:text-slate-200 focus:border-teal-700 dark:focus:border-teal-500 focus:outline-none truncate"
             >
               <option value={DifficultyLevel.BASIC}>Cơ bản</option>
               <option value={DifficultyLevel.INTERMEDIATE}>Trung bình</option>
@@ -376,7 +376,7 @@ export function AiExerciseStudio({
           <div className="space-y-1">
             <label
               htmlFor="quiz-count"
-              className="block text-xs font-medium text-slate-600"
+              className="block text-xs font-medium text-slate-600 dark:text-slate-400"
             >
               Số câu
             </label>
@@ -396,7 +396,7 @@ export function AiExerciseStudio({
                       | 'custom'
                   )
                 }
-                className="min-h-[42px] sm:min-h-0 min-w-0 flex-1 rounded-lg border border-slate-200 bg-white pl-3 pr-9 py-2 text-xs font-medium text-slate-800 focus:border-teal-700 focus:outline-none truncate"
+                className="min-h-[42px] sm:min-h-0 min-w-0 flex-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 pl-3 pr-9 py-2 text-xs font-medium text-slate-800 dark:text-slate-200 focus:border-teal-700 dark:focus:border-teal-500 focus:outline-none truncate"
               >
                 <option value="10">10 câu</option>
                 <option value="20">20 câu</option>
@@ -417,25 +417,25 @@ export function AiExerciseStudio({
                   placeholder="1-100"
                   value={customCountInput}
                   onChange={(e) => setCustomCountInput(e.target.value)}
-                  className={`min-h-[42px] sm:min-h-0 w-16 sm:w-20 shrink-0 rounded-lg border px-2 py-2 font-mono text-base sm:text-xs font-medium text-slate-900 tabular-nums focus:outline-none ${
+                  className={`min-h-[42px] sm:min-h-0 w-16 sm:w-20 shrink-0 rounded-lg border px-2 py-2 font-mono text-base sm:text-xs font-medium text-slate-900 dark:text-slate-100 tabular-nums focus:outline-none ${
                     isCustomCountValid
-                      ? 'border-slate-200 bg-white focus:border-teal-700'
-                      : 'border-rose-400 bg-rose-50 focus:border-rose-600'
+                      ? 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-teal-700 dark:focus:border-teal-500'
+                      : 'border-rose-400 dark:border-rose-700 bg-rose-50 dark:bg-rose-950/50 focus:border-rose-600'
                   }`}
                 />
               )}
             </div>
             {!isCustomCountValid && (
-              <p className="text-[11px] font-medium text-rose-700">
+              <p className="text-[11px] font-medium text-rose-700 dark:text-rose-400">
                 Nhập từ 1 đến 100 câu.
               </p>
             )}
           </div>
         </div>
 
-        <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between border-t border-slate-100 pt-3">
-          <div className="text-xs text-slate-500">
-            <span className="font-mono font-semibold text-slate-800 tabular-nums">
+        <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between border-t border-slate-100 dark:border-slate-800 pt-3">
+          <div className="text-xs text-slate-500 dark:text-slate-400">
+            <span className="font-mono font-semibold text-slate-800 dark:text-slate-200 tabular-nums">
               {targetWords.length} từ
             </span>{' '}
             ·{' '}
@@ -453,7 +453,7 @@ export function AiExerciseStudio({
                 loading || targetWords.length === 0 || !isCustomCountValid
               }
               onClick={handleGenerateLocal}
-              className="min-h-[44px] sm:min-h-0 inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-800 transition-colors hover:bg-slate-50 disabled:opacity-50 whitespace-nowrap shrink-0"
+              className="min-h-[44px] sm:min-h-0 inline-flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs font-semibold text-slate-800 dark:text-slate-200 transition-colors hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 whitespace-nowrap shrink-0"
             >
               <BookCheck className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Luyện tập nhanh</span>
@@ -465,7 +465,7 @@ export function AiExerciseStudio({
                 loading || targetWords.length === 0 || !isCustomCountValid
               }
               onClick={handleGenerate}
-              className="min-h-[44px] sm:min-h-0 inline-flex items-center justify-center gap-1.5 rounded-lg bg-teal-700 px-3.5 py-2 text-xs font-semibold text-white transition-colors hover:bg-teal-800 disabled:opacity-50 whitespace-nowrap shrink-0"
+              className="min-h-[44px] sm:min-h-0 inline-flex items-center justify-center gap-1.5 rounded-lg bg-teal-700 dark:bg-teal-600 px-3.5 py-2 text-xs font-semibold text-white transition-colors hover:bg-teal-800 dark:hover:bg-teal-500 disabled:opacity-50 whitespace-nowrap shrink-0"
             >
               {loading ? (
                 <RefreshCw className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
@@ -488,13 +488,13 @@ export function AiExerciseStudio({
       {loading && (
         <div
           aria-live="polite"
-          className="rounded-xl border border-slate-200 bg-white p-8 text-center space-y-2"
+          className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 text-center space-y-2"
         >
           <RefreshCw
-            className="mx-auto h-5 w-5 animate-spin text-teal-700"
+            className="mx-auto h-5 w-5 animate-spin text-teal-700 dark:text-teal-400"
             aria-hidden="true"
           />
-          <p className="text-sm font-medium text-slate-800">
+          <p className="text-sm font-medium text-slate-800 dark:text-slate-200">
             Đang tạo {questionCount} câu hỏi...
           </p>
         </div>
@@ -504,11 +504,11 @@ export function AiExerciseStudio({
       {error && !loading && (
         <div
           role="alert"
-          className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3"
+          className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-rose-200 dark:border-rose-800/80 bg-rose-50 dark:bg-rose-950/40 px-4 py-3"
         >
-          <div className="flex items-center gap-2.5 text-rose-900">
+          <div className="flex items-center gap-2.5 text-rose-900 dark:text-rose-200">
             <AlertCircle
-              className="h-4 w-4 shrink-0 text-rose-700"
+              className="h-4 w-4 shrink-0 text-rose-700 dark:text-rose-400"
               aria-hidden="true"
             />
             <span className="text-xs font-medium">{error}</span>
@@ -517,14 +517,14 @@ export function AiExerciseStudio({
             <button
               type="button"
               onClick={handleGenerateLocal}
-              className="rounded-lg border border-rose-300 bg-white px-3 py-1.5 text-xs font-semibold text-rose-800 hover:bg-rose-100 whitespace-nowrap"
+              className="rounded-lg border border-rose-300 dark:border-rose-700 bg-white dark:bg-slate-900 px-3 py-1.5 text-xs font-semibold text-rose-800 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-950/60 whitespace-nowrap"
             >
               Luyện tập nhanh
             </button>
             <button
               type="button"
               onClick={handleGenerate}
-              className="rounded-lg bg-rose-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-rose-800 whitespace-nowrap"
+              className="rounded-lg bg-rose-700 dark:bg-rose-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-rose-800 dark:hover:bg-rose-500 whitespace-nowrap"
             >
               Thử lại
             </button>
@@ -536,8 +536,8 @@ export function AiExerciseStudio({
       {exerciseSet && !loading && (
         <div className="space-y-4">
           {summary && (
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4">
-              <div className="font-display text-xl font-bold text-slate-900 tabular-nums">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
+              <div className="font-display text-xl font-bold text-slate-900 dark:text-slate-100 tabular-nums">
                 {summary.correct} / {summary.total} câu đúng (
                 {summary.scorePercent}%)
               </div>
@@ -545,7 +545,7 @@ export function AiExerciseStudio({
                 <button
                   type="button"
                   onClick={resetSessionState}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 whitespace-nowrap shrink-0"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 whitespace-nowrap shrink-0"
                 >
                   <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
                   <span>Làm lại</span>
@@ -557,7 +557,7 @@ export function AiExerciseStudio({
                       ? handleGenerate
                       : handleGenerateLocal
                   }
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-teal-700 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-teal-800 whitespace-nowrap shrink-0"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-teal-700 dark:bg-teal-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-teal-800 dark:hover:bg-teal-500 whitespace-nowrap shrink-0"
                 >
                   <Wand2 className="h-3.5 w-3.5" aria-hidden="true" />
                   <span>Đề mới</span>
@@ -567,7 +567,7 @@ export function AiExerciseStudio({
           )}
 
           <div className="flex flex-wrap items-center justify-between gap-2 px-1">
-            <h1 className="font-display text-lg font-bold text-slate-900">
+            <h1 className="font-display text-lg font-bold text-slate-900 dark:text-slate-100">
               {exerciseSet.title}
             </h1>
             <div className="flex items-center gap-3">
@@ -579,7 +579,7 @@ export function AiExerciseStudio({
                     setDefaultShowPinyin((prev) => !prev);
                     setPinyinOverrides({});
                   }}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 transition-colors hover:border-teal-700 hover:text-teal-800 whitespace-nowrap shrink-0"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-2.5 py-1 text-xs font-medium text-slate-700 dark:text-slate-300 transition-colors hover:border-teal-700 dark:hover:border-teal-500 hover:text-teal-800 dark:hover:text-teal-300 whitespace-nowrap shrink-0"
                 >
                   {defaultShowPinyin ? (
                     <EyeOff className="h-3.5 w-3.5" aria-hidden="true" />
@@ -591,7 +591,7 @@ export function AiExerciseStudio({
                   </span>
                 </button>
               )}
-              <span className="font-mono text-xs text-slate-500 tabular-nums">
+              <span className="font-mono text-xs text-slate-500 dark:text-slate-400 tabular-nums">
                 {answeredCount} / {exerciseSet.questions.length}
               </span>
             </div>
@@ -611,11 +611,11 @@ export function AiExerciseStudio({
               return (
                 <article
                   key={q.id}
-                  className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5 space-y-3.5"
+                  className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 sm:p-5 space-y-3.5"
                 >
                   <div className="flex items-center justify-between gap-2 text-xs">
-                    <span className="text-slate-500">
-                      <span className="font-mono font-semibold text-slate-900 tabular-nums">
+                    <span className="text-slate-500 dark:text-slate-400">
+                      <span className="font-mono font-semibold text-slate-900 dark:text-slate-100 tabular-nums">
                         Câu {qIdx + 1}
                       </span>{' '}
                       · {KIND_LABELS[q.kind]}
@@ -625,8 +625,8 @@ export function AiExerciseStudio({
                       <span
                         className={`inline-flex items-center gap-1 font-semibold ${
                           isQuestionCorrect
-                            ? 'text-emerald-700'
-                            : 'text-rose-700'
+                            ? 'text-emerald-700 dark:text-emerald-400'
+                            : 'text-rose-700 dark:text-rose-400'
                         }`}
                       >
                         {isQuestionCorrect ? (
@@ -648,122 +648,124 @@ export function AiExerciseStudio({
                   </div>
 
                   <div className="space-y-2">
-                    <p className="text-base font-semibold text-slate-900">
+                    <p className="text-base font-semibold text-slate-900 dark:text-slate-100">
                       {q.promptVi}
                     </p>
 
-                        {q.chinesePrompt && (
-                          <div className="flex items-center gap-3 rounded-lg bg-slate-50 px-3.5 py-2.5">
-                            <span className="font-hanzi text-xl font-semibold text-slate-900">
-                              {q.chinesePrompt}
-                            </span>
-                            <button
-                              type="button"
-                              aria-label={`Nghe câu tiếng Trung câu ${qIdx + 1}`}
-                              onClick={() => speakChinese(q.chinesePrompt!)}
-                              className="rounded bg-white p-1.5 text-slate-600 hover:text-teal-800"
-                            >
-                              <Volume2 className="h-4 w-4" aria-hidden="true" />
-                            </button>
-                          </div>
-                        )}
-
-                        {q.pinyinHint && isPinyinVisible && (
-                          <p className="font-mono text-xs text-slate-500">
-                            {q.pinyinHint}
-                          </p>
-                        )}
+                    {q.chinesePrompt && (
+                      <div className="flex items-center gap-3 rounded-lg bg-slate-50 dark:bg-slate-800/70 px-3.5 py-2.5">
+                        <span className="font-hanzi text-xl font-semibold text-slate-900 dark:text-slate-100">
+                          {q.chinesePrompt}
+                        </span>
+                        <button
+                          type="button"
+                          aria-label={`Nghe câu tiếng Trung câu ${qIdx + 1}`}
+                          onClick={() => speakChinese(q.chinesePrompt!)}
+                          className="rounded bg-white dark:bg-slate-900 p-1.5 text-slate-600 dark:text-slate-300 hover:text-teal-800 dark:hover:text-teal-300"
+                        >
+                          <Volume2 className="h-4 w-4" aria-hidden="true" />
+                        </button>
                       </div>
+                    )}
 
-                      {(q.kind === 'multiple_choice' || q.kind === 'fill_blank') &&
-                        q.options && (
-                          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                            {q.options.map((opt, optIdx) => {
-                              const selected = userAnswer === opt;
-                              const isOptionCorrect =
-                                isSummaryDone && q.correctAnswer === opt;
-                              const isOptionWrong =
-                                isSummaryDone &&
-                                selected &&
-                                q.correctAnswer !== opt;
+                    {q.pinyinHint && isPinyinVisible && (
+                      <p className="font-mono text-xs text-slate-500 dark:text-slate-400">
+                        {q.pinyinHint}
+                      </p>
+                    )}
+                  </div>
 
-                              return (
-                                <button
-                                  key={`${q.id}-opt-${optIdx}`}
-                                  type="button"
-                                  disabled={isSummaryDone}
-                                  onClick={() => setQuestionAnswer(q.id, opt)}
-                                  className={`flex items-center justify-between gap-2 rounded-lg border px-3.5 py-2.5 text-left text-sm font-medium transition-colors ${
-                                    isOptionCorrect
-                                      ? 'border-emerald-600 bg-emerald-50 text-emerald-900'
-                                      : isOptionWrong
-                                        ? 'border-rose-500 bg-rose-50 text-rose-900'
-                                        : selected
-                                          ? 'border-teal-700 bg-teal-50 text-teal-950'
-                                          : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50'
-                                  }`}
-                                >
-                                  <span>{opt}</span>
-                                  {isOptionCorrect && (
-                                    <CheckCircle2
-                                      className="h-4 w-4 shrink-0 text-emerald-700"
-                                      aria-hidden="true"
-                                    />
-                                  )}
-                                  {isOptionWrong && (
-                                    <XCircle
-                                      className="h-4 w-4 shrink-0 text-rose-700"
-                                      aria-hidden="true"
-                                    />
-                                  )}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        )}
+                  {(q.kind === 'multiple_choice' || q.kind === 'fill_blank') &&
+                    q.options && (
+                      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                        {q.options.map((opt, optIdx) => {
+                          const selected = userAnswer === opt;
+                          const isOptionCorrect =
+                            isSummaryDone && q.correctAnswer === opt;
+                          const isOptionWrong =
+                            isSummaryDone &&
+                            selected &&
+                            q.correctAnswer !== opt;
 
-                      {q.kind === 'matching' && q.matchingPairs && (
-                        <MatchingQuestionBlock
-                          question={q}
-                          userMapping={
-                            (userAnswer as Record<string, string> | undefined) ??
-                            {}
-                          }
-                          isGraded={isSummaryDone}
-                          onChange={(nextMap) =>
-                            setQuestionAnswer(q.id, nextMap)
-                          }
-                        />
-                      )}
+                          return (
+                            <button
+                              key={`${q.id}-opt-${optIdx}`}
+                              type="button"
+                              disabled={isSummaryDone}
+                              onClick={() => setQuestionAnswer(q.id, opt)}
+                              className={`flex items-center justify-between gap-2 rounded-lg border px-3.5 py-2.5 text-left text-sm font-medium transition-colors ${
+                                isOptionCorrect
+                                  ? 'border-emerald-600 dark:border-emerald-500 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-900 dark:text-emerald-200'
+                                  : isOptionWrong
+                                    ? 'border-rose-500 dark:border-rose-500 bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200'
+                                    : selected
+                                      ? 'border-teal-700 dark:border-teal-500 bg-teal-50 dark:bg-teal-950/60 text-teal-950 dark:text-teal-100'
+                                      : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/60 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+                              }`}
+                            >
+                              <span>{opt}</span>
+                              {isOptionCorrect && (
+                                <CheckCircle2
+                                  className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400"
+                                  aria-hidden="true"
+                                />
+                              )}
+                              {isOptionWrong && (
+                                <XCircle
+                                  className="h-4 w-4 shrink-0 text-rose-700 dark:text-rose-400"
+                                  aria-hidden="true"
+                                />
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
 
-                      {q.kind === 'sentence_order' && q.orderTokens && (
-                        <SentenceOrderBlock
-                          question={q}
-                          selectedTokens={
-                            Array.isArray(userAnswer) ? userAnswer : []
-                          }
-                          isGraded={isSummaryDone}
-                          onChange={(nextTokens) =>
-                            setQuestionAnswer(q.id, nextTokens)
-                          }
-                        />
-                      )}
+                  {q.kind === 'matching' && q.matchingPairs && (
+                    <MatchingQuestionBlock
+                      question={q}
+                      userMapping={
+                        (userAnswer as Record<string, string> | undefined) ??
+                        {}
+                      }
+                      isGraded={isSummaryDone}
+                      onChange={(nextMap) =>
+                        setQuestionAnswer(q.id, nextMap)
+                      }
+                    />
+                  )}
+
+                  {q.kind === 'sentence_order' && q.orderTokens && (
+                    <SentenceOrderBlock
+                      question={q}
+                      selectedTokens={
+                        Array.isArray(userAnswer) ? userAnswer : []
+                      }
+                      isGraded={isSummaryDone}
+                      onChange={(nextTokens) =>
+                        setQuestionAnswer(q.id, nextTokens)
+                      }
+                    />
+                  )}
 
                   {isQuestionGraded && (
-                    <div className="rounded-lg bg-slate-50 p-3 text-xs leading-relaxed text-slate-700 space-y-1">
+                    <div className="rounded-lg bg-slate-50 dark:bg-slate-800/70 p-3 text-xs leading-relaxed text-slate-700 dark:text-slate-300 space-y-1">
                       {q.correctAnswer && !isQuestionCorrect && (
-                        <p className="font-semibold text-emerald-800">
+                        <p className="font-semibold text-emerald-800 dark:text-emerald-300">
                           Đáp án: {q.correctAnswer}
                         </p>
                       )}
                       {!isQuestionCorrect && q.correctOrder && (
-                        <p className="font-semibold text-emerald-800">
+                        <p className="font-semibold text-emerald-800 dark:text-emerald-300">
                           Thứ tự: {q.correctOrder.join(' ')}
                         </p>
                       )}
                       <p>{q.explanationVi}</p>
                       {q.memoryTipVi && (
-                        <p className="text-teal-900">Mẹo: {q.memoryTipVi}</p>
+                        <p className="text-teal-900 dark:text-teal-300">
+                          Mẹo: {q.memoryTipVi}
+                        </p>
                       )}
                     </div>
                   )}
@@ -777,7 +779,7 @@ export function AiExerciseStudio({
               <button
                 type="button"
                 onClick={handleSubmitQuiz}
-                className="min-h-[48px] w-full sm:w-auto sm:min-h-0 rounded-xl sm:rounded-lg bg-slate-900 px-5 py-3 sm:py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800 tabular-nums"
+                className="min-h-[48px] w-full sm:w-auto sm:min-h-0 rounded-xl sm:rounded-lg bg-slate-900 dark:bg-slate-100 px-5 py-3 sm:py-2.5 text-sm font-semibold text-white dark:text-slate-900 transition-colors hover:bg-slate-800 dark:hover:bg-white tabular-nums"
               >
                 Nộp bài ({answeredCount}/{exerciseSet.questions.length})
               </button>
@@ -818,13 +820,13 @@ function MatchingQuestionBlock({
             key={pair.id}
             className={`grid grid-cols-1 gap-2 rounded-lg border p-2.5 sm:grid-cols-12 sm:items-center ${
               pairCorrect
-                ? 'border-emerald-300 bg-emerald-50/50'
+                ? 'border-emerald-300 dark:border-emerald-700 bg-emerald-50/50 dark:bg-emerald-950/40'
                 : pairWrong
-                  ? 'border-rose-300 bg-rose-50/50'
-                  : 'border-slate-200 bg-slate-50/60'
+                  ? 'border-rose-300 dark:border-rose-700 bg-rose-50/50 dark:bg-rose-950/40'
+                  : 'border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/60'
             }`}
           >
-            <div className="sm:col-span-5 font-hanzi text-base font-semibold text-slate-900">
+            <div className="sm:col-span-5 font-hanzi text-base font-semibold text-slate-900 dark:text-slate-100">
               {pair.left}
             </div>
             <div className="sm:col-span-7 space-y-1">
@@ -841,7 +843,7 @@ function MatchingQuestionBlock({
                 onChange={(e) =>
                   onChange({ ...userMapping, [pair.id]: e.target.value })
                 }
-                className="w-full rounded-lg border border-slate-200 bg-white pl-3 pr-9 py-1.5 text-sm text-slate-800 focus:border-teal-700 focus:outline-none disabled:bg-slate-100"
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 pl-3 pr-9 py-1.5 text-sm text-slate-800 dark:text-slate-200 focus:border-teal-700 dark:focus:border-teal-500 focus:outline-none disabled:bg-slate-100 dark:disabled:bg-slate-800"
               >
                 <option value="">-- Chọn nghĩa --</option>
                 {rightOptions.map((opt) => (
@@ -851,7 +853,7 @@ function MatchingQuestionBlock({
                 ))}
               </select>
               {pairWrong && (
-                <p className="text-xs font-medium text-emerald-800">
+                <p className="text-xs font-medium text-emerald-800 dark:text-emerald-300">
                   Đáp án: {pair.right}
                 </p>
               )}
@@ -892,9 +894,11 @@ function SentenceOrderBlock({
 
   return (
     <div className="space-y-2.5">
-      <div className="min-h-[48px] rounded-lg border border-slate-200 bg-slate-50 p-2.5 flex flex-wrap items-center gap-1.5">
+      <div className="min-h-[48px] rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70 p-2.5 flex flex-wrap items-center gap-1.5">
         {selectedTokens.length === 0 ? (
-          <span className="text-xs text-slate-400">Chọn từ bên dưới...</span>
+          <span className="text-xs text-slate-400 dark:text-slate-500">
+            Chọn từ bên dưới...
+          </span>
         ) : (
           selectedTokens.map((tok, i) => (
             <button
@@ -904,7 +908,7 @@ function SentenceOrderBlock({
               onClick={() =>
                 onChange(selectedTokens.filter((_, idx) => idx !== i))
               }
-              className="rounded-md border border-teal-700 bg-white px-2.5 py-1 font-hanzi text-base font-semibold text-teal-900 hover:bg-rose-50 disabled:cursor-default"
+              className="rounded-md border border-teal-700 dark:border-teal-500 bg-white dark:bg-slate-900 px-2.5 py-1 font-hanzi text-base font-semibold text-teal-900 dark:text-teal-200 hover:bg-rose-50 dark:hover:bg-rose-950/50 disabled:cursor-default"
             >
               {tok}
             </button>
@@ -920,7 +924,7 @@ function SentenceOrderBlock({
               type="button"
               disabled={isGraded || isUsed}
               onClick={() => onChange([...selectedTokens, token])}
-              className="rounded-md border border-slate-200 bg-white px-3 py-1.5 font-hanzi text-base font-medium text-slate-900 transition-colors hover:border-teal-700 disabled:opacity-30"
+              className="rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-1.5 font-hanzi text-base font-medium text-slate-900 dark:text-slate-100 transition-colors hover:border-teal-700 dark:hover:border-teal-500 disabled:opacity-30"
             >
               {token}
             </button>
@@ -931,7 +935,7 @@ function SentenceOrderBlock({
           <button
             type="button"
             onClick={() => onChange([])}
-            className="text-xs font-medium text-slate-500 hover:text-slate-900"
+            className="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
           >
             Chọn lại
           </button>
