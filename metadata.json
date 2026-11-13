@@ -1,0 +1,8 @@
+{
+  "name": "Remix Hán Việt 300",
+  "description": "Học và ôn tập 570 thẻ từ vựng tiếng Trung theo mô hình Thư mục → Bộ thẻ → Thẻ (HSK 1 bản 3.0 \u0026 Quyển 2 Huy Tường) với thẻ SRS và bài tập AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

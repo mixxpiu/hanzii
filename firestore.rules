@@ -1,0 +1,424 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidWordDocId(wordId) {
+      return wordId is string && wordId.size() >= 1 && wordId.size() <= 6 && wordId.matches('^[1-9][0-9]{0,5}$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function hasUserRoot(userId) {
+      return exists(/databases/$(database)/documents/users/$(userId)) &&
+        get(/databases/$(database)/documents/users/$(userId)).data.uid == request.auth.uid;
+    }
+
+    function isValidUserRoot(data) {
+      return data.keys().hasAll(['uid', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly(['uid', 'createdAt', 'updatedAt']) &&
+        data.uid is string &&
+        data.uid.size() >= 1 &&
+        data.uid.size() <= 128 &&
+        data.uid.matches('^[a-zA-Z0-9_\\-]+$') &&
+        data.uid == request.auth.uid &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['uid', 'displayName', 'email', 'photoURL', 'createdAt', 'updatedAt']) &&
+        data.keys().hasOnly(['uid', 'displayName', 'email', 'photoURL', 'createdAt', 'updatedAt']) &&
+        data.uid is string &&
+        data.uid.size() >= 1 &&
+        data.uid.size() <= 128 &&
+        data.uid.matches('^[a-zA-Z0-9_\\-]+$') &&
+        data.uid == request.auth.uid &&
+        data.displayName is string &&
+        data.displayName.size() <= 120 &&
+        data.email is string &&
+        data.email.size() <= 200 &&
+        data.photoURL is string &&
+        data.photoURL.size() <= 500 &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidWordProgress(data, wordId) {
+      return data.keys().hasAll([
+          'ownerId',
+          'wordId',
+          'status',
+          'easeFactor',
+          'intervalDays',
+          'repetitions',
+          'correctCount',
+          'wrongCount',
+          'updatedAt'
+        ]) &&
+        data.keys().hasOnly([
+          'ownerId',
+          'wordId',
+          'status',
+          'easeFactor',
+          'intervalDays',
+          'repetitions',
+          'correctCount',
+          'wrongCount',
+          'lastReviewedAt',
+          'nextReviewAt',
+          'updatedAt'
+        ]) &&
+        data.ownerId is string &&
+        data.ownerId.size() >= 1 &&
+        data.ownerId.size() <= 128 &&
+        data.ownerId.matches('^[a-zA-Z0-9_\\-]+$') &&
+        data.ownerId == request.auth.uid &&
+        data.wordId is int &&
+        data.wordId >= 1 &&
+        data.wordId <= 100000 &&
+        string(data.wordId) == wordId &&
+        data.status is string &&
+        data.status.size() <= 20 &&
+        data.status in ['new', 'learning', 'mastered'] &&
+        data.easeFactor is number &&
+        data.easeFactor >= 1.0 &&
+        data.easeFactor <= 10.0 &&
+        data.intervalDays is int &&
+        data.intervalDays >= 0 &&
+        data.intervalDays <= 36500 &&
+        data.repetitions is int &&
+        data.repetitions >= 0 &&
+        data.repetitions <= 10000 &&
+        data.correctCount is int &&
+        data.correctCount >= 0 &&
+        data.correctCount <= 100000 &&
+        data.wrongCount is int &&
+        data.wrongCount >= 0 &&
+        data.wrongCount <= 100000 &&
+        (!('lastReviewedAt' in data) || data.lastReviewedAt == null || (data.lastReviewedAt is int && data.lastReviewedAt >= 0)) &&
+        (!('nextReviewAt' in data) || data.nextReviewAt == null || (data.nextReviewAt is int && data.nextReviewAt >= 0)) &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidVocabOverride(data, wordId) {
+      return data.keys().hasAll([
+          'ownerId',
+          'wordId',
+          'viMeaning',
+          'posVi',
+          'example',
+          'examplePinyin',
+          'exampleVi',
+          'updatedAt'
+        ]) &&
+        data.keys().hasOnly([
+          'ownerId',
+          'wordId',
+          'viMeaning',
+          'posVi',
+          'example',
+          'examplePinyin',
+          'exampleVi',
+          'updatedAt'
+        ]) &&
+        data.ownerId is string &&
+        data.ownerId.size() >= 1 &&
+        data.ownerId.size() <= 128 &&
+        data.ownerId.matches('^[a-zA-Z0-9_\\-]+$') &&
+        data.ownerId == request.auth.uid &&
+        data.wordId is int &&
+        data.wordId >= 1 &&
+        data.wordId <= 100000 &&
+        string(data.wordId) == wordId &&
+        data.viMeaning is string &&
+        data.viMeaning.size() <= 500 &&
+        data.posVi is string &&
+        data.posVi.size() <= 100 &&
+        data.example is string &&
+        data.example.size() <= 500 &&
+        data.examplePinyin is string &&
+        data.examplePinyin.size() <= 500 &&
+        data.exampleVi is string &&
+        data.exampleVi.size() <= 500 &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidWordInsight(data, wordId) {
+      return data.keys().hasAll([
+          'ownerId',
+          'wordId',
+          'characterBreakdown',
+          'examples',
+          'usageNoteVi',
+          'memoryTipVi',
+          'updatedAt'
+        ]) &&
+        data.keys().hasOnly([
+          'ownerId',
+          'wordId',
+          'characterBreakdown',
+          'examples',
+          'usageNoteVi',
+          'memoryTipVi',
+          'updatedAt'
+        ]) &&
+        data.ownerId is string &&
+        data.ownerId.size() >= 1 &&
+        data.ownerId.size() <= 128 &&
+        data.ownerId.matches('^[a-zA-Z0-9_\\-]+$') &&
+        data.ownerId == request.auth.uid &&
+        data.wordId is int &&
+        data.wordId >= 1 &&
+        data.wordId <= 100000 &&
+        string(data.wordId) == wordId &&
+        data.characterBreakdown is list &&
+        data.characterBreakdown.size() <= 12 &&
+        (data.characterBreakdown.size() == 0 || (
+          data.characterBreakdown[0] is map &&
+          data.characterBreakdown[0].char is string &&
+          data.characterBreakdown[0].char.size() <= 16 &&
+          data.characterBreakdown[0].meaningVi is string &&
+          data.characterBreakdown[0].meaningVi.size() <= 300
+        )) &&
+        data.examples is list &&
+        data.examples.size() <= 6 &&
+        (data.examples.size() == 0 || (
+          data.examples[0] is map &&
+          data.examples[0].chinese is string &&
+          data.examples[0].chinese.size() <= 300 &&
+          data.examples[0].pinyin is string &&
+          data.examples[0].pinyin.size() <= 300 &&
+          data.examples[0].vietnamese is string &&
+          data.examples[0].vietnamese.size() <= 400
+        )) &&
+        data.usageNoteVi is string &&
+        data.usageNoteVi.size() <= 1000 &&
+        data.memoryTipVi is string &&
+        data.memoryTipVi.size() <= 1000 &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidUserStreak(data) {
+      return data.keys().hasAll(['ownerId', 'studyDates', 'bestStreak', 'updatedAt']) &&
+        data.keys().hasOnly(['ownerId', 'studyDates', 'bestStreak', 'updatedAt']) &&
+        data.ownerId is string &&
+        data.ownerId.size() >= 1 &&
+        data.ownerId.size() <= 128 &&
+        data.ownerId.matches('^[a-zA-Z0-9_\\-]+$') &&
+        data.ownerId == request.auth.uid &&
+        data.studyDates is list &&
+        data.studyDates.size() <= 365 &&
+        (data.studyDates.size() == 0 || (
+          data.studyDates[0] is string &&
+          data.studyDates[0].size() == 10 &&
+          data.studyDates[0].matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        )) &&
+        data.bestStreak is int &&
+        data.bestStreak >= 0 &&
+        data.bestStreak <= 10000 &&
+        data.updatedAt is timestamp;
+    }
+
+    match /users/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow list: if false;
+      allow create: if isVerifiedUser() &&
+        isOwner(userId) &&
+        isValidId(userId) &&
+        isValidUserRoot(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+      allow update: if isVerifiedUser() &&
+        isOwner(userId) &&
+        isValidId(userId) &&
+        isValidUserRoot(incoming()) &&
+        incoming().uid == existing().uid &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['updatedAt']);
+      allow delete: if false;
+
+      match /private/{docId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidId(docId) && docId == 'profile';
+        allow list: if false;
+        allow create: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          docId == 'profile' &&
+          isValidUserProfile(incoming()) &&
+          incoming().createdAt == request.time &&
+          incoming().updatedAt == request.time &&
+          hasUserRoot(userId);
+        allow update: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          docId == 'profile' &&
+          isValidUserProfile(incoming()) &&
+          incoming().uid == existing().uid &&
+          incoming().createdAt == existing().createdAt &&
+          incoming().updatedAt == request.time &&
+          incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'email', 'photoURL', 'updatedAt']) &&
+          hasUserRoot(userId);
+        allow delete: if false;
+      }
+
+      match /progress/{wordId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidWordDocId(wordId);
+        allow list: if isOwner(userId) && isValidId(userId) && resource.data.ownerId == request.auth.uid;
+        allow create: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidWordDocId(wordId) &&
+          isValidWordProgress(incoming(), wordId) &&
+          incoming().updatedAt == request.time &&
+          hasUserRoot(userId);
+        allow update: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidWordDocId(wordId) &&
+          isValidWordProgress(incoming(), wordId) &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().wordId == existing().wordId &&
+          incoming().updatedAt == request.time &&
+          incoming().diff(existing()).affectedKeys().hasOnly([
+            'status',
+            'easeFactor',
+            'intervalDays',
+            'repetitions',
+            'correctCount',
+            'wrongCount',
+            'lastReviewedAt',
+            'nextReviewAt',
+            'updatedAt'
+          ]) &&
+          hasUserRoot(userId);
+        allow delete: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidWordDocId(wordId) &&
+          hasUserRoot(userId);
+      }
+
+      match /overrides/{wordId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidWordDocId(wordId);
+        allow list: if isOwner(userId) && isValidId(userId) && resource.data.ownerId == request.auth.uid;
+        allow create: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidWordDocId(wordId) &&
+          isValidVocabOverride(incoming(), wordId) &&
+          incoming().updatedAt == request.time &&
+          hasUserRoot(userId);
+        allow update: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidWordDocId(wordId) &&
+          isValidVocabOverride(incoming(), wordId) &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().wordId == existing().wordId &&
+          incoming().updatedAt == request.time &&
+          incoming().diff(existing()).affectedKeys().hasOnly([
+            'viMeaning',
+            'posVi',
+            'example',
+            'examplePinyin',
+            'exampleVi',
+            'updatedAt'
+          ]) &&
+          hasUserRoot(userId);
+        allow delete: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidWordDocId(wordId) &&
+          hasUserRoot(userId);
+      }
+
+      match /insights/{wordId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidWordDocId(wordId);
+        allow list: if isOwner(userId) && isValidId(userId) && resource.data.ownerId == request.auth.uid;
+        allow create: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidWordDocId(wordId) &&
+          isValidWordInsight(incoming(), wordId) &&
+          incoming().updatedAt == request.time &&
+          hasUserRoot(userId);
+        allow update: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidWordDocId(wordId) &&
+          isValidWordInsight(incoming(), wordId) &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().wordId == existing().wordId &&
+          incoming().updatedAt == request.time &&
+          incoming().diff(existing()).affectedKeys().hasOnly([
+            'characterBreakdown',
+            'examples',
+            'usageNoteVi',
+            'memoryTipVi',
+            'updatedAt'
+          ]) &&
+          hasUserRoot(userId);
+        allow delete: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          isValidWordDocId(wordId) &&
+          hasUserRoot(userId);
+      }
+
+      match /stats/{docId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidId(docId) && docId == 'streak';
+        allow list: if false;
+        allow create: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          docId == 'streak' &&
+          isValidUserStreak(incoming()) &&
+          incoming().updatedAt == request.time &&
+          hasUserRoot(userId);
+        allow update: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          docId == 'streak' &&
+          isValidUserStreak(incoming()) &&
+          incoming().ownerId == existing().ownerId &&
+          incoming().updatedAt == request.time &&
+          incoming().diff(existing()).affectedKeys().hasOnly(['studyDates', 'bestStreak', 'updatedAt']) &&
+          hasUserRoot(userId);
+        allow delete: if isVerifiedUser() &&
+          isOwner(userId) &&
+          isValidId(userId) &&
+          docId == 'streak' &&
+          hasUserRoot(userId);
+      }
+    }
+  }
+}

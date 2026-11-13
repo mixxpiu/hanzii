@@ -1,0 +1,294 @@
+{
+  "entities": {
+    "UserRoot": {
+      "title": "UserRoot",
+      "description": "Root workspace anchor for an authenticated learner (non-PII).",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Authentication UID.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when workspace was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when workspace was last synced."
+        }
+      },
+      "required": ["uid", "createdAt", "updatedAt"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Private learner profile containing PII isolated under users/{userId}/private.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Authentication UID.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name from Google account.",
+          "maxLength": 120
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Verified email address.",
+          "maxLength": 200
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Profile avatar URL.",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of initial profile creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of last profile update."
+        }
+      },
+      "required": ["uid", "displayName", "email", "photoURL", "createdAt", "updatedAt"]
+    },
+    "WordProgressDoc": {
+      "title": "WordProgressDoc",
+      "description": "Per-word SRS progress and review statistics for a learner.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Owner Firebase UID.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "wordId": {
+          "type": "integer",
+          "description": "Catalog vocabulary word ID."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["new", "learning", "mastered"],
+          "description": "Current study mastery status.",
+          "maxLength": 20
+        },
+        "easeFactor": {
+          "type": "number",
+          "description": "SM-2 ease factor."
+        },
+        "intervalDays": {
+          "type": "integer",
+          "description": "Current review interval in days."
+        },
+        "repetitions": {
+          "type": "integer",
+          "description": "Consecutive successful recall repetitions."
+        },
+        "correctCount": {
+          "type": "integer",
+          "description": "Lifetime correct answers count."
+        },
+        "wrongCount": {
+          "type": "integer",
+          "description": "Lifetime wrong answers count."
+        },
+        "lastReviewedAt": {
+          "type": "integer",
+          "description": "Epoch milliseconds of last review, or null."
+        },
+        "nextReviewAt": {
+          "type": "integer",
+          "description": "Epoch milliseconds of next scheduled review, or null."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of latest update."
+        }
+      },
+      "required": [
+        "ownerId",
+        "wordId",
+        "status",
+        "easeFactor",
+        "intervalDays",
+        "repetitions",
+        "correctCount",
+        "wrongCount",
+        "updatedAt"
+      ]
+    },
+    "VocabOverrideDoc": {
+      "title": "VocabOverrideDoc",
+      "description": "User-customized meaning, part of speech, or example sentence for a word.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Owner Firebase UID.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "wordId": {
+          "type": "integer",
+          "description": "Catalog vocabulary word ID."
+        },
+        "viMeaning": {
+          "type": "string",
+          "description": "Custom Vietnamese meaning.",
+          "maxLength": 500
+        },
+        "posVi": {
+          "type": "string",
+          "description": "Custom Vietnamese part of speech.",
+          "maxLength": 100
+        },
+        "example": {
+          "type": "string",
+          "description": "Custom Chinese example sentence.",
+          "maxLength": 500
+        },
+        "examplePinyin": {
+          "type": "string",
+          "description": "Custom pinyin for example sentence.",
+          "maxLength": 500
+        },
+        "exampleVi": {
+          "type": "string",
+          "description": "Custom Vietnamese translation of example sentence.",
+          "maxLength": 500
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of latest update."
+        }
+      },
+      "required": [
+        "ownerId",
+        "wordId",
+        "viMeaning",
+        "posVi",
+        "example",
+        "examplePinyin",
+        "exampleVi",
+        "updatedAt"
+      ]
+    },
+    "WordInsightDoc": {
+      "title": "WordInsightDoc",
+      "description": "Saved AI character breakdown and example notes for a vocabulary word.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Owner Firebase UID.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "wordId": {
+          "type": "integer",
+          "description": "Catalog vocabulary word ID."
+        },
+        "characterBreakdown": {
+          "type": "array",
+          "description": "Character breakdown entries (max 12)."
+        },
+        "examples": {
+          "type": "array",
+          "description": "Additional usage examples (max 6)."
+        },
+        "usageNoteVi": {
+          "type": "string",
+          "description": "Vietnamese usage note.",
+          "maxLength": 1000
+        },
+        "memoryTipVi": {
+          "type": "string",
+          "description": "Vietnamese mnemonic tip.",
+          "maxLength": 1000
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of latest update."
+        }
+      },
+      "required": [
+        "ownerId",
+        "wordId",
+        "characterBreakdown",
+        "examples",
+        "usageNoteVi",
+        "memoryTipVi",
+        "updatedAt"
+      ]
+    },
+    "UserStreak": {
+      "title": "UserStreak",
+      "description": "Learner daily study streak dates and best streak record.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Owner Firebase UID.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "studyDates": {
+          "type": "array",
+          "description": "Unique local calendar study dates (YYYY-MM-DD, max 365)."
+        },
+        "bestStreak": {
+          "type": "integer",
+          "description": "All-time longest consecutive study streak in days."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of latest update."
+        }
+      },
+      "required": ["ownerId", "studyDates", "bestStreak", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserRoot" },
+      "description": "Non-PII root workspace document owned strictly by {userId}."
+    },
+    "/users/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Isolated private user profile (PII) readable and writable only by {userId}."
+    },
+    "/users/{userId}/progress/{wordId}": {
+      "schema": { "$ref": "#/entities/WordProgressDoc" },
+      "description": "Per-word SRS learning progress owned strictly by {userId}."
+    },
+    "/users/{userId}/overrides/{wordId}": {
+      "schema": { "$ref": "#/entities/VocabOverrideDoc" },
+      "description": "Per-word custom Vietnamese meaning and example overrides owned strictly by {userId}."
+    },
+    "/users/{userId}/insights/{wordId}": {
+      "schema": { "$ref": "#/entities/WordInsightDoc" },
+      "description": "Cached AI character breakdown and example sentences per word owned strictly by {userId}."
+    },
+    "/users/{userId}/stats/{docId}": {
+      "schema": { "$ref": "#/entities/UserStreak" },
+      "description": "Study streak stats document (streak) owned strictly by {userId}."
+    }
+  }
+}
