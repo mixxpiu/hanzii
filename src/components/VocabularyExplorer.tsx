@@ -21,6 +21,7 @@ import {
   VOCAB_FOLDERS,
   getDecksByFolder,
 } from '../data/vocabCatalog';
+import { WORD_INSIGHTS } from '../data/wordInsights/index';
 import {
   StudyStatus,
   type ProgressMap,
@@ -155,11 +156,12 @@ export function VocabularyExplorer({
   }, [mobileInspectorOpen]);
 
   const selectedProgress = getWordProgress(progressMap, selectedWord.id);
-  const selectedInsight = insightCache[selectedWord.id];
+  const selectedInsight =
+    insightCache[selectedWord.id] ?? WORD_INSIGHTS[selectedWord.id];
   const hasOverride = Boolean(overrides[selectedWord.id]);
 
   async function handleFetchInsight(word: VocabWord) {
-    if (insightCache[word.id]) return;
+    if (insightCache[word.id] || WORD_INSIGHTS[word.id]) return;
     setInsightLoading(true);
     setInsightError(null);
     try {
@@ -962,7 +964,7 @@ export function VocabularyExplorer({
         <div className="space-y-3 border-t border-slate-100 dark:border-slate-800 pt-4">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-              Chiết tự &amp; Mở rộng AI
+              Chiết tự &amp; Mở rộng
             </h2>
             {!selectedInsight && (
               <button
@@ -1337,7 +1339,7 @@ export function VocabularyExplorer({
               <div className="space-y-3 border-t border-slate-100 dark:border-slate-800 pt-3.5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                    Chiết tự &amp; Mở rộng AI
+                    Chiết tự &amp; Mở rộng
                   </h2>
                   {!selectedInsight && (
                     <button
