@@ -90,7 +90,7 @@ function mapAiError(err: unknown): { status: number; message: string } {
   };
 }
 
-async function startServer() {
+export function createApiApp() {
   const app = express();
   app.use(express.json({ limit: '1mb' }));
 
@@ -569,6 +569,12 @@ Hãy trả về:
     }
   });
 
+  return app;
+}
+
+async function startServer() {
+  const app = createApiApp();
+
   if (process.env.NODE_ENV !== 'production') {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
@@ -589,7 +595,10 @@ Hãy trả về:
   });
 }
 
-startServer().catch((err) => {
-  console.error('Failed to start server:', err);
-  process.exit(1);
-});
+// On Vercel the app is exported as a serverless function instead of listening.
+if (!process.env.VERCEL) {
+  startServer().catch((err) => {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  });
+}

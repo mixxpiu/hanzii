@@ -1,12 +1,10 @@
 {
-  "projectId": "gen-lang-client-0261338183",
-  "appId": "1:466933296895:web:0063381edf78d6670e26ca",
-  "apiKey": "AIzaSyCTCm-oP0IcnvmlL7cBNT5XtOg7rlFwG9M",
-  "authDomain": "gen-lang-client-0261338183.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-remixhnvit300-ccfd1f54-9784-4916-b7e2-12a13c2679e4",
-  "storageBucket": "gen-lang-client-0261338183.firebasestorage.app",
-  "messagingSenderId": "466933296895",
-  "measurementId": "",
-  "oAuthClientId": "466933296895-tkcimretrpis40p0b7k30e0sdio2buab.apps.googleusercontent.com",
-  "recaptchaSiteKey": ""
+  "projectId": "hanzi-9998d",
+  "appId": "1:530933730290:web:9df876dddc2003c9cab96b",
+  "apiKey": "AIzaSyDkyycjNaUgiYiOShQTr-ZyG9KekxU9C8k",
+  "authDomain": "hanzi-9998d.firebaseapp.com",
+  "firestoreDatabaseId": "(default)",
+  "storageBucket": "hanzi-9998d.firebasestorage.app",
+  "messagingSenderId": "530933730290",
+  "measurementId": "G-5L8WBB20BZ"
 }
